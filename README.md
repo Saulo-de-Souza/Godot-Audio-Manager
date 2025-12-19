@@ -86,14 +86,6 @@ The `GodotAudioManagerOmni` class represents an omnidirectional audio resource t
 | `bus`           | StringName                  | Target audio bus name                                              |
 | `playback_type` | AudioServer.PlaybackType    | Playback type of the stream player                                 |
 
-### Methods
-
-| Method           | Parameters                         | Return Type       | Description                                |
-| ---------------- | ---------------------------------- | ----------------- | ------------------------------------------ |
-| `get_audio_name` | with_preffix: bool = false         | String            | Gets the audio name                        |
-| `get_audio`      | -                                  | AudioStreamPlayer | Gets the underlying AudioStreamPlayer      |
-| `_set_loop`      | p_stream: AudioStream, value: bool | void              | Sets loop for different audio stream types |
-
 ---
 
 ## GodotAudioManager2D
@@ -119,15 +111,6 @@ The `GodotAudioManager2D` class represents a 2D audio resource that replaces God
 | `bus`              | StringName               | Target audio bus name                                              |
 | `area_mask`        | int                      | Area2D layers that affect the sound                                |
 | `playback_type`    | AudioServer.PlaybackType | Playback type of the stream player                                 |
-
-### Methods
-
-| Method           | Parameters                         | Return Type         | Description                                  |
-| ---------------- | ---------------------------------- | ------------------- | -------------------------------------------- |
-| `get_audio_name` | with_preffix: bool = false         | String              | Gets the audio name                          |
-| `get_audio`      | -                                  | AudioStreamPlayer2D | Gets the underlying AudioStreamPlayer2D      |
-| `_set_loop`      | p_stream: AudioStream, value: bool | void                | Sets loop for different audio stream types   |
-| `_change_parent` | p_parent: Node2D                   | void                | Changes the parent node for the audio player |
 
 ---
 
@@ -163,14 +146,9 @@ The `GodotAudioManager3D` class represents a 3D audio resource that replaces God
 | `attenuation_filter_db`                | float                                | Amount the filter affects loudness                                 |
 | `doppler_tracking`                     | AudioStreamPlayer3D.DopplerTracking  | Doppler effect calculation step                                    |
 
-### Methods
+---
 
-| Method           | Parameters                         | Return Type         | Description                                  |
-| ---------------- | ---------------------------------- | ------------------- | -------------------------------------------- |
-| `get_audio_name` | with_preffix: bool = false         | String              | Gets the audio name                          |
-| `get_audio`      | -                                  | AudioStreamPlayer3D | Gets the underlying AudioStreamPlayer3D      |
-| `_set_loop`      | p_stream: AudioStream, value: bool | void                | Sets loop for different audio stream types   |
-| `_change_parent` | p_parent: Node3D                   | void                | Changes the parent node for the audio player |
+## Screenshots
 
 !["screenshot 1](screenshots/1.png)
 
