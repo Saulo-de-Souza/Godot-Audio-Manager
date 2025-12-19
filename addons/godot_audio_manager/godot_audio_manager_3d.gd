@@ -323,11 +323,13 @@ const PREFIX_NAME: String = "_3d"
 var _owner: GodotAudioManager
 var _audio_stream_player: AudioStreamPlayer3D
 var _audio_name: String
+var _parent: Node3D
 
 
 func _init_owner(p_owner: GodotAudioManager, p_name: String, p_parent: Node3D) -> void:
 	_owner = p_owner
 	_audio_name = p_name
+	_parent = p_parent
 	
 	_audio_stream_player = AudioStreamPlayer3D.new()
 	_audio_stream_player.stream = stream
@@ -360,17 +362,18 @@ func _init_owner(p_owner: GodotAudioManager, p_name: String, p_parent: Node3D) -
 	
 	_audio_stream_player.finished.connect(_on_audio_stream_player_finished)
 
-	if p_parent:
-		p_parent.add_child.call_deferred(_audio_stream_player)
+	if _parent:
+		_parent.add_child.call_deferred(_audio_stream_player)
 		await _audio_stream_player.tree_entered
 	else:
 		_owner.add_child(_audio_stream_player)
 		
 	
 func _change_parent(p_parent: Node3D) -> void:
-	if p_parent:
-		if get_audio() and get_audio().get_parent() and get_audio().get_parent() != p_parent:
-			get_audio().reparent(p_parent)
+	_parent = p_parent
+	if _parent:
+		if get_audio() and get_audio().get_parent() and get_audio().get_parent() != _parent:
+			get_audio().reparent(_parent)
 	else:
 		if get_audio() and get_audio().get_parent() and get_audio().get_parent() != _owner:
 			get_audio().reparent(_owner)
