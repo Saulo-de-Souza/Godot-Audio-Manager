@@ -125,6 +125,10 @@ class_name GodotAudioManager3D extends Resource
 		pause_on_blur = value
 		if is_instance_valid(_audio_stream_player):
 			_audio_stream_player.set_meta("pause_on_blur", pause_on_blur)
+			if _audio_stream_player.is_inside_tree():
+				for child in _audio_stream_player.get_parent().get_children():
+					if child.has_meta("name") and child.has_meta(META_3D) and child.get_meta("name") == get_audio_name():
+						child.set_meta("pause_on_blur", pause_on_blur)
 		if is_instance_valid(_owner):
 			_owner.update_configuration_warnings()
 			
