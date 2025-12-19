@@ -33,7 +33,7 @@ class_name GodotAudioManager2D extends Resource
 			
 ## The audio's pitch and tempo, as a multiplier of the stream's sample rate. 
 ## A value of 2.0 doubles the audio's pitch, while a value of 0.5 halves the pitch.
-@export_range(0.01, 4.0, 0.1) var pitch_scale: float = 1.0:
+@export_range(0.01, 4.0, 0.01) var pitch_scale: float = 1.0:
 	set(value):
 		if value < 0.01 or value > 4.0:
 			push_warning("The pitch_scale property does not accept the value (%d). Consider assigning a value from 0.01 to 4.0. (%s)" % [value, get_audio_name()])
