@@ -86,6 +86,8 @@ class_name GodotAudioManager2D extends Resource
 @export var pause_on_blur: bool = false:
 	set(value):
 		pause_on_blur = value
+		if is_instance_valid(_audio_stream_player):
+			_audio_stream_player.set_meta("pause_on_blur", pause_on_blur)
 		if is_instance_valid(_owner):
 			_owner.update_configuration_warnings()
 			
@@ -249,6 +251,7 @@ func _init_owner(p_owner: GodotAudioManager, p_name: String, p_parent: Node2D) -
 
 	_audio_stream_player.name = get_audio_name(true)
 	_audio_stream_player.set_meta(META_2D, true)
+	_audio_stream_player.set_meta("pause_on_blur", pause_on_blur)
 	_audio_stream_player.set_meta("name", get_audio_name())
 	_set_loop(stream, loop)
 	
