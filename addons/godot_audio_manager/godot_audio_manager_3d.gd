@@ -15,7 +15,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.stream = stream
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.stream = stream
 
 ## Decides if audio should get quieter with distance linearly, quadratically, logarithmically, or not be affected by distance, effectively disabling attenuation.
@@ -25,7 +25,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.attenuation_model = attenuation_model
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.attenuation_model = attenuation_model
 
 ## Volume of sound, in decibels. This is an offset of the stream's volume.
@@ -38,7 +38,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.volume_db = volume_db
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.volume_db = volume_db
 
 ## The factor for the attenuation effect. Higher values make the sound audible over a larger distance.
@@ -51,7 +51,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.unit_size = unit_size
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.unit_size = unit_size
 
 ## Sets the absolute maximum of the sound level, in decibels.
@@ -64,7 +64,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.max_db = max_db
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.max_db = max_db
 			
 ## The audio's pitch and tempo, as a multiplier of the stream's sample rate. 
@@ -78,7 +78,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.pitch_scale = pitch_scale
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.pitch_scale = pitch_scale
 
 ## If true, this node is playing sounds. Setting this property has the same effect as play() and stop().
@@ -101,7 +101,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.stream_paused = stream_paused
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.stream_paused = stream_paused
 
 ## Enable loop.
@@ -112,7 +112,7 @@ class_name GodotAudioManager3D extends Resource
 			_owner._set_loop(stream, loop)
 		if is_instance_valid(_owner):
 			for audio in _audios_ref:
-				if audio:
+				if audio and audio.get_meta("name") == _name:
 					_owner._set_loop(audio.stream, loop)
 			
 ## Pause on blur.
@@ -120,7 +120,7 @@ class_name GodotAudioManager3D extends Resource
 	set(value):
 		pause_on_blur = value
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.set_meta("pause_on_blur", pause_on_blur)
 			
 ## The distance past which the sound can no longer be heard at all. 
@@ -136,7 +136,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.max_distance = max_distance
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.max_distance = max_distance
 			
 ## The maximum number of sounds this node can play at the same time. 
@@ -164,7 +164,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.max_polyphony = max_polyphony
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.max_polyphony = max_polyphony
 
 ## Scales the panning strength for this node by multiplying the base Audio > General > 3D Panning Strength by this factor. 
@@ -181,7 +181,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.panning_strength = panning_strength
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.panning_strength = panning_strength
 		
 ## The target bus name. All sounds from this node will be playing on this bus.
@@ -193,7 +193,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.bus = bus
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.bus = bus
 			
 ## Determines which Area3D layers affect the sound for reverb and audio bus effects. 
@@ -208,7 +208,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.area_mask = area_mask
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.area_mask = area_mask
 
 ## The playback type of the stream player. 
@@ -219,7 +219,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.playback_type = playback_type
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.playback_type = playback_type
 
 ## If true, the audio should be attenuated according to the direction of the sound.
@@ -229,7 +229,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.emission_angle_enabled = emission_angle_enabled
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.emission_angle_enabled = emission_angle_enabled
 
 ## The angle in which the audio reaches a listener unattenuated.
@@ -242,7 +242,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.emission_angle_degrees = emission_angle_degrees
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.emission_angle_degrees = emission_angle_degrees
 
 ## Attenuation factor used if listener is outside of emission_angle_degrees and emission_angle_enabled is set, in decibels.
@@ -255,7 +255,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.emission_angle_filter_attenuation_db = emission_angle_filter_attenuation_db
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.emission_angle_filter_attenuation_db = emission_angle_filter_attenuation_db
 			
 ## The cutoff frequency of the attenuation low-pass filter, in Hz. A sound above this frequency is attenuated more than a sound below this frequency. 
@@ -269,7 +269,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.attenuation_filter_cutoff_hz = attenuation_filter_cutoff_hz
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.attenuation_filter_cutoff_hz = attenuation_filter_cutoff_hz
 		
 ## Amount how much the filter affects the loudness, in decibels.	
@@ -282,7 +282,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.attenuation_filter_db = attenuation_filter_db
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.attenuation_filter_db = attenuation_filter_db
 			
 ## Decides in which step the Doppler effect should be calculated.
@@ -292,7 +292,7 @@ class_name GodotAudioManager3D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.doppler_tracking = doppler_tracking
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.doppler_tracking = doppler_tracking
 
 

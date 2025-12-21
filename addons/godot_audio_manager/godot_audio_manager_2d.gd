@@ -15,7 +15,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.stream = stream
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.stream = stream
 
 ## Volume of sound, in decibels. This is an offset of the stream's volume.
@@ -28,7 +28,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.volume_db = volume_db
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.volume_db = volume_db
 			
 ## The audio's pitch and tempo, as a multiplier of the stream's sample rate. 
@@ -42,7 +42,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.pitch_scale = pitch_scale
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.pitch_scale = pitch_scale
 
 ## If true, this node is playing sounds. Setting this property has the same effect as play() and stop().
@@ -64,7 +64,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.stream_paused = stream_paused
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.stream_paused = stream_paused
 
 ## Enable loop.
@@ -75,7 +75,7 @@ class_name GodotAudioManager2D extends Resource
 			_owner._set_loop(stream, loop)
 		if is_instance_valid(_owner):
 			for audio in _audios_ref:
-				if audio:
+				if audio and audio.get_meta("name") == _name:
 					_owner._set_loop(audio.stream, loop)
 			
 ## Pause on blur.
@@ -83,7 +83,7 @@ class_name GodotAudioManager2D extends Resource
 	set(value):
 		pause_on_blur = value
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.set_meta("pause_on_blur", pause_on_blur)
 			
 ## The distance past which the sound can no longer be heard at all. 
@@ -99,7 +99,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.max_distance = max_distance
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.max_distance = max_distance
 
 ## The volume is attenuated over distance with this as an exponent.	
@@ -112,7 +112,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.attenuation = attenuation
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.attenuation = attenuation
 
 
@@ -140,7 +140,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.max_polyphony = max_polyphony
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.max_polyphony = max_polyphony
 
 ## Scales the panning strength for this node by multiplying the base Audio > General > 2D Panning Strength by this factor. 
@@ -157,7 +157,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.panning_strength = panning_strength
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.panning_strength = panning_strength
 		
 ## The target bus name. All sounds from this node will be playing on this bus.
@@ -169,7 +169,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.bus = bus
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.bus = bus
 			
 ## Determines which Area2D layers affect the sound for reverb and audio bus effects. 
@@ -184,7 +184,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.area_mask = area_mask
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.area_mask = area_mask
 
 ## The playback type of the stream player. 
@@ -195,7 +195,7 @@ class_name GodotAudioManager2D extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.playback_type = playback_type
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.playback_type = playback_type
 
 

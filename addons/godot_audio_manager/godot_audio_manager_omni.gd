@@ -14,7 +14,7 @@ class_name GodotAudioManagerOmni extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.stream = stream
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.stream = stream
 
 ## Volume of sound, in decibels. This is an offset of the stream's volume.
@@ -27,7 +27,7 @@ class_name GodotAudioManagerOmni extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.volume_db = volume_db
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.volume_db = volume_db
 
 ## The audio's pitch and tempo, as a multiplier of the stream's sample rate. 
@@ -41,7 +41,7 @@ class_name GodotAudioManagerOmni extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.pitch_scale = pitch_scale
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.pitch_scale = pitch_scale
 
 ## If true, this node is playing sounds. Setting this property has the same effect as play() and stop().
@@ -63,7 +63,7 @@ class_name GodotAudioManagerOmni extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.stream_paused = stream_paused
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.stream_paused = stream_paused
 
 ## Enable loop.
@@ -74,7 +74,7 @@ class_name GodotAudioManagerOmni extends Resource
 			_owner._set_loop(stream, loop)
 		if is_instance_valid(_owner):
 			for audio in _audios_ref:
-				if audio:
+				if audio and audio.get_meta("name") == _name:
 					_owner._set_loop(audio.stream, loop)
 			
 ## Pause on blur.
@@ -82,7 +82,7 @@ class_name GodotAudioManagerOmni extends Resource
 	set(value):
 		pause_on_blur = value
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.set_meta("pause_on_blur", pause_on_blur)
 			
 ## The mix target channels. 
@@ -93,7 +93,7 @@ class_name GodotAudioManagerOmni extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.mix_target = mix_target
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.mix_target = mix_target
 
 ## The maximum number of sounds this node can play at the same time. 
@@ -120,7 +120,7 @@ class_name GodotAudioManagerOmni extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.max_polyphony = max_polyphony
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.max_polyphony = max_polyphony
 
 ## The target bus name. All sounds from this node will be playing on this bus.
@@ -132,7 +132,7 @@ class_name GodotAudioManagerOmni extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.bus = bus
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.bus = bus
 
 ## The playback type of the stream player. 
@@ -143,7 +143,7 @@ class_name GodotAudioManagerOmni extends Resource
 		if is_instance_valid(_audio_preview):
 			_audio_preview.playback_type = playback_type
 		for audio in _audios_ref:
-			if audio:
+			if audio and audio.get_meta("name") == _name:
 				audio.playback_type = playback_type
 
 
