@@ -157,3 +157,10 @@ The `GodotAudioManager3D` class represents a 3D audio resource that replaces God
 !["screenshot 3](screenshots/3.png)
 
 !["screenshot 4](screenshots/4.png)
+
+---
+
+## ❤️ Support
+
+If this project helps you, consider supporting:
+https://github.com/sponsors/Saulo-de-Souza
