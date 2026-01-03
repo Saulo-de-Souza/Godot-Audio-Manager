@@ -5,3 +5,4 @@ gp.bat export-ignore
 .gitignore export-ignore
 screenshots export-ignore
 assets export-ignore
+.github export-ignore
