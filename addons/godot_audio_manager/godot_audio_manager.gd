@@ -34,14 +34,14 @@ class_name GodotAudioManager extends Node
 		if is_instance_valid(parent_2d):
 			if not parent_2d.is_node_ready(): await parent_2d.ready
 			for key in audios_stream_players_2d:
-				var audio: AudioStreamPlayer2D = get_audio_stream_player_2d(key)
+				var audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(key)
 				if audio and audio.get_parent():
 					if audio.get_parent() != parent_2d:
 						audio.reparent(parent_2d)
 						audio.position = Vector2.ZERO
 		else:
 			for key in audios_stream_players_2d:
-				var audio: AudioStreamPlayer2D = get_audio_stream_player_2d(key)
+				var audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(key)
 				if audio and audio.get_parent():
 					if audio.get_parent() != self:
 						audio.reparent(self)
@@ -73,14 +73,14 @@ class_name GodotAudioManager extends Node
 		if is_instance_valid(parent_3d):
 			if not parent_3d.is_node_ready(): await parent_3d.ready
 			for key in audios_stream_players_3d:
-				var audio: AudioStreamPlayer3D = get_audio_stream_player_3d(key)
+				var audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(key)
 				if audio and audio.get_parent():
 					if audio.get_parent() != parent_3d:
 						audio.reparent(parent_3d)
 						audio.position = Vector3.ZERO
 		else:
 			for key in audios_stream_players_3d:
-				var audio: AudioStreamPlayer3D = get_audio_stream_player_3d(key)
+				var audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(key)
 				if audio and audio.get_parent():
 					if audio.get_parent() != self:
 						audio.reparent(self)
@@ -203,7 +203,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 #region AUDIO OMNI *********************************************************************************
 ## Plays a sound from the beginning, or the given from_position in seconds.
 func play_omni(audio_name: String, from_position: float = 0.0) -> void:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.play(from_position)
@@ -211,7 +211,7 @@ func play_omni(audio_name: String, from_position: float = 0.0) -> void:
 
 ## Stops all sounds from this node.
 func stop_omni(audio_name: String) -> void:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.stop()
@@ -219,7 +219,7 @@ func stop_omni(audio_name: String) -> void:
 	
 ## The sounds are paused.
 func pause_omni(audio_name: String) -> void:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.stream_paused = true
@@ -227,7 +227,7 @@ func pause_omni(audio_name: String) -> void:
 	
 ## Resumes paused sounds.
 func unpause_omni(audio_name: String) -> void:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.stream_paused = false
@@ -235,21 +235,21 @@ func unpause_omni(audio_name: String) -> void:
 	
 ## Check if the sound is playing.
 func is_playing_omni(audio_name: String) -> bool:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if not find_audio: return false
 	return find_audio.playing
 	
 
 ## Check if the sound is paused.
 func is_paused_omni(audio_name: String) -> bool:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if not find_audio: return false
 	return find_audio.stream_paused
 	
 
 ## Restarts all sounds to be played from the given to_position, in seconds. Does nothing if no sounds are playing.
 func seek_omni(audio_name: String, position: float) -> void:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		await get_tree().process_frame
@@ -258,7 +258,7 @@ func seek_omni(audio_name: String, position: float) -> void:
 
 ## Returns the position in the AudioStream of the latest sound, in seconds. Returns 0.0 if no sounds are playing.
 func get_playback_position_omni(audio_name: String) -> float:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if not find_audio: return 0.0
 	return find_audio.get_playback_position()
 	
@@ -266,12 +266,12 @@ func get_playback_position_omni(audio_name: String) -> float:
 ## Returns the latest AudioStreamPlayback of this node, usually the most recently created by play(). 
 ## If no sounds are playing, this method fails and returns an empty playback.
 func get_stream_playback_omni(audio_name: String) -> AudioStreamPlayback:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if not find_audio:
 		return null
 	if not find_audio.is_inside_tree():
 		await find_audio.tree_entered
-	if not is_playing_omni(audio_name):
+	if not await is_playing_omni(audio_name):
 		return null
 	if not await has_stream_playback_omni(audio_name):
 		return null
@@ -280,7 +280,7 @@ func get_stream_playback_omni(audio_name: String) -> AudioStreamPlayback:
 	
 ## Returns true if any sound is active, even if stream_paused is set to true. See also playing and get_stream_playback().
 func has_stream_playback_omni(audio_name: String) -> bool:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if not find_audio: return false
 	await get_tree().process_frame
 	return find_audio.has_stream_playback()
@@ -288,7 +288,7 @@ func has_stream_playback_omni(audio_name: String) -> bool:
 
 ## Enable loop.
 func set_loop_omni(audio_name: String, value: bool) -> void:
-	var find_audio: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	var find_audio: AudioStreamPlayer = await get_audio_stream_player(audio_name)
 	if not find_audio: return
 	_set_loop(find_audio.stream, value)
 	
@@ -299,6 +299,9 @@ func has_audio_stream_player(audio_name: String) -> bool:
 
 
 func get_audio_stream_player(audio_name: String) -> AudioStreamPlayer:
+	if not is_inside_tree(): await tree_entered
+	if not is_node_ready(): await ready
+	await get_tree().process_frame
 	var find_audio: AudioStreamPlayer = audios_stream_players.get(audio_name)
 	if not find_audio: push_warning("Audio (%s) not found."%audio_name)
 	return find_audio
@@ -360,7 +363,7 @@ func play_2d(audio_name: String, from_position: float = 0.0) -> void:
 	if parent_2d:
 		if not parent_2d.is_inside_tree(): await parent_2d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.play(from_position)
@@ -371,7 +374,7 @@ func stop_2d(audio_name: String) -> void:
 	if parent_2d:
 		if not parent_2d.is_inside_tree(): await parent_2d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.stop()
@@ -382,7 +385,7 @@ func pause_2d(audio_name: String) -> void:
 	if parent_2d:
 		if not parent_2d.is_inside_tree(): await parent_2d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.stream_paused = true
@@ -393,7 +396,7 @@ func unpause_2d(audio_name: String) -> void:
 	if parent_2d:
 		if not parent_2d.is_inside_tree(): await parent_2d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.stream_paused = false
@@ -401,14 +404,14 @@ func unpause_2d(audio_name: String) -> void:
 	
 ## Check if the sound is playing.
 func is_playing_2d(audio_name: String) -> bool:
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if not find_audio: return false
 	return find_audio.playing
 	
 
 ## Check if the sound is paused.
 func is_paused_2d(audio_name: String) -> bool:
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if not find_audio: return false
 	return find_audio.stream_paused
 	
@@ -418,7 +421,7 @@ func seek_2d(audio_name: String, position: float) -> void:
 	if parent_2d:
 		if not parent_2d.is_inside_tree(): await parent_2d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		await get_tree().process_frame
@@ -427,7 +430,7 @@ func seek_2d(audio_name: String, position: float) -> void:
 
 ## Returns the position in the AudioStream of the latest sound, in seconds. Returns 0.0 if no sounds are playing.
 func get_playback_position_2d(audio_name: String) -> float:
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if not find_audio: return 0.0
 	return find_audio.get_playback_position()
 	
@@ -438,12 +441,12 @@ func get_stream_playback_2d(audio_name: String) -> AudioStreamPlayback:
 	if parent_2d:
 		if not parent_2d.is_inside_tree(): await parent_2d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if not find_audio:
 		return null
 	if not find_audio.is_inside_tree():
 		await find_audio.tree_entered
-	if not is_playing_2d(audio_name):
+	if not await is_playing_2d(audio_name):
 		return null
 	if not await has_stream_playback_2d(audio_name):
 		return null
@@ -452,7 +455,7 @@ func get_stream_playback_2d(audio_name: String) -> AudioStreamPlayback:
 	
 ## Returns true if any sound is active, even if stream_paused is set to true. See also playing and get_stream_playback().
 func has_stream_playback_2d(audio_name: String) -> bool:
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if not find_audio: return false
 	await get_tree().process_frame
 	return find_audio.has_stream_playback()
@@ -460,7 +463,7 @@ func has_stream_playback_2d(audio_name: String) -> bool:
 
 ## Enable loop.
 func set_loop_2d(audio_name: String, value: bool) -> void:
-	var find_audio: AudioStreamPlayer2D = get_audio_stream_player_2d(audio_name)
+	var find_audio: AudioStreamPlayer2D = await get_audio_stream_player_2d(audio_name)
 	if not find_audio: return
 	_set_loop(find_audio.stream, value)
 	
@@ -471,6 +474,9 @@ func has_audio_stream_player_2d(audio_name: String) -> bool:
 
 
 func get_audio_stream_player_2d(audio_name: String) -> AudioStreamPlayer2D:
+	if not is_inside_tree(): await tree_entered
+	if not is_node_ready(): await ready
+	await get_tree().process_frame
 	var find_audio: AudioStreamPlayer2D = audios_stream_players_2d.get(audio_name)
 	if not find_audio: push_warning("Audio (%s) not found."%audio_name)
 	return find_audio
@@ -538,7 +544,7 @@ func play_3d(audio_name: String, from_position: float = 0.0) -> void:
 	if parent_3d:
 		if not parent_3d.is_inside_tree(): await parent_3d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.play(from_position)
@@ -549,7 +555,7 @@ func stop_3d(audio_name: String) -> void:
 	if parent_3d:
 		if not parent_3d.is_inside_tree(): await parent_3d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.stop()
@@ -560,7 +566,7 @@ func pause_3d(audio_name: String) -> void:
 	if parent_3d:
 		if not parent_3d.is_inside_tree(): await parent_3d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.stream_paused = true
@@ -571,7 +577,7 @@ func unpause_3d(audio_name: String) -> void:
 	if parent_3d:
 		if not parent_3d.is_inside_tree(): await parent_3d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		find_audio.stream_paused = false
@@ -579,14 +585,14 @@ func unpause_3d(audio_name: String) -> void:
 	
 ## Check if the sound is playing.
 func is_playing_3d(audio_name: String) -> bool:
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if not find_audio: return false
 	return find_audio.playing
 	
 
 ## Check if the sound is paused.
 func is_paused_3d(audio_name: String) -> bool:
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if not find_audio: return false
 	return find_audio.stream_paused
 	
@@ -596,7 +602,7 @@ func seek_3d(audio_name: String, position: float) -> void:
 	if parent_3d:
 		if not parent_3d.is_inside_tree(): await parent_3d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if find_audio:
 		if not find_audio.is_inside_tree(): await find_audio.tree_entered
 		await get_tree().process_frame
@@ -605,7 +611,7 @@ func seek_3d(audio_name: String, position: float) -> void:
 
 ## Returns the position in the AudioStream of the latest sound, in seconds. Returns 0.0 if no sounds are playing.
 func get_playback_position_3d(audio_name: String) -> float:
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if not find_audio: return 0.0
 	return find_audio.get_playback_position()
 	
@@ -616,12 +622,12 @@ func get_stream_playback_3d(audio_name: String) -> AudioStreamPlayback:
 	if parent_3d:
 		if not parent_3d.is_inside_tree(): await parent_3d.tree_entered
 		await get_tree().process_frame
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if not find_audio:
 		return null
 	if not find_audio.is_inside_tree():
 		await find_audio.tree_entered
-	if not is_playing_3d(audio_name):
+	if not await is_playing_3d(audio_name):
 		return null
 	if not await has_stream_playback_3d(audio_name):
 		return null
@@ -630,7 +636,7 @@ func get_stream_playback_3d(audio_name: String) -> AudioStreamPlayback:
 	
 ## Returns true if any sound is active, even if stream_paused is set to true. See also playing and get_stream_playback().
 func has_stream_playback_3d(audio_name: String) -> bool:
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if not find_audio: return false
 	await get_tree().process_frame
 	return find_audio.has_stream_playback()
@@ -638,7 +644,7 @@ func has_stream_playback_3d(audio_name: String) -> bool:
 
 ## Enable loop.
 func set_loop_3d(audio_name: String, value: bool) -> void:
-	var find_audio: AudioStreamPlayer3D = get_audio_stream_player_3d(audio_name)
+	var find_audio: AudioStreamPlayer3D = await get_audio_stream_player_3d(audio_name)
 	if not find_audio: return
 	_set_loop(find_audio.stream, value)
 	
@@ -649,6 +655,9 @@ func has_audio_stream_player_3d(audio_name: String) -> bool:
 
 
 func get_audio_stream_player_3d(audio_name: String) -> AudioStreamPlayer3D:
+	if not is_inside_tree(): await tree_entered
+	if not is_node_ready(): await ready
+	await get_tree().process_frame
 	var find_audio: AudioStreamPlayer3D = audios_stream_players_3d.get(audio_name)
 	if not find_audio: push_warning("Audio (%s) not found."%audio_name)
 	return find_audio
@@ -719,7 +728,7 @@ func _check_audios_3d(p_warnings: PackedStringArray) -> void:
 
 
 #region PRIVATE METHODS ****************************************************************************
-func _on_web_blur(args: Array) -> void:
+func _on_web_blur(_args: Array) -> void:
 	if Engine.is_editor_hint(): return
 	
 	var has_audio_paused: bool = false
@@ -758,7 +767,7 @@ func _on_web_blur(args: Array) -> void:
 		""".dedent())
 	
 	
-func _on_web_focus(args: Array) -> void:
+func _on_web_focus(_args: Array) -> void:
 	if Engine.is_editor_hint(): return
 	
 	for key in audios_stream_players:
